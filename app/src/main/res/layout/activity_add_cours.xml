@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Spinner
+        android:id="@+id/spinnerMatiere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/editDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date (ex: 15/05/2026)" />
+
+    <EditText
+        android:id="@+id/editHeure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Heure début (ex: 08:00)" />
+
+    <EditText
+        android:id="@+id/editDuree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Durée (en heures)"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editContenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contenu du cours" />
+
+    <Button
+        android:id="@+id/btnAjouter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AJOUTER COURS" />
+
+</LinearLayout>

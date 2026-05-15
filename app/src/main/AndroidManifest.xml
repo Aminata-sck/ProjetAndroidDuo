@@ -12,15 +12,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetAndroid"
         tools:targetApi="31">
+
+        <!-- ACTIVITÉS COURS -->
+
+        <activity
+            android:name=".ui.cours.AddCoursActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.cours.ListCoursActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.cours.UpdateCoursActivity"
+            android:exported="false" />
+
+        <!-- MAIN ACTIVITY -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
+
     </application>
 
 </manifest>
