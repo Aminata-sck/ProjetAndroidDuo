@@ -17,24 +17,31 @@ public class CoursViewModel extends AndroidViewModel {
     private final LiveData<List<Cours>> allCours;
 
     public CoursViewModel(@NonNull Application application) {
+
         super(application);
-        repository = new CoursRepository(application);
-        allCours = repository.getAllCours();
+
+        repository=new CoursRepository(application);
+
+        allCours=repository.getAllCours();
     }
 
-    public void insert(Cours cours) {
+    public void insert(Cours cours){
         repository.insert(cours);
     }
 
-    public void update(Cours cours) {
+    public void update(Cours cours){
         repository.update(cours);
     }
 
-    public void delete(Cours cours) {
+    public void delete(Cours cours){
         repository.delete(cours);
     }
 
-    public LiveData<List<Cours>> getAllCours() {
+    public LiveData<List<Cours>> getAllCours(){
         return allCours;
+    }
+
+    public Integer getTotalHeuresByMatiere(int id){
+        return repository.getTotalHeuresByMatiere(id);
     }
 }

@@ -22,23 +22,45 @@ public class ListCoursActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_list_cours);
 
-        recyclerCours = findViewById(R.id.recyclerCours);
+        recyclerCours =
+                findViewById(R.id.recyclerCours);
 
-        recyclerCours.setLayoutManager(new LinearLayoutManager(this));
+        recyclerCours.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+
         recyclerCours.setHasFixedSize(true);
 
         adapter = new CoursAdapter();
 
         recyclerCours.setAdapter(adapter);
 
-        coursViewModel = new ViewModelProvider(this)
-                .get(CoursViewModel.class);
+        coursViewModel =
+                new ViewModelProvider(this)
+                        .get(CoursViewModel.class);
 
-        coursViewModel.getAllCours().observe(this, cours -> {
-            adapter.setCoursList(cours);
+
+        // Suppression au clic long
+
+        adapter.setOnItemLongClickListener(cours -> {
+
+            coursViewModel.delete(cours);
+
         });
+
+
+        // affichage automatique
+
+        coursViewModel
+                .getAllCours()
+                .observe(this, cours -> {
+
+                    adapter.setCoursList(cours);
+
+                });
+
     }
 }
-

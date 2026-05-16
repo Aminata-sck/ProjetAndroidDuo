@@ -15,35 +15,43 @@ import java.util.concurrent.Executors;
 public class CoursRepository {
 
     private final CoursDao coursDao;
+
     private final LiveData<List<Cours>> allCours;
 
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor =
+            Executors.newSingleThreadExecutor();
 
-    public CoursRepository(Application application) {
+    public CoursRepository(Application application){
 
-        AppDatabase database = AppDatabase.getInstance(application);
-        coursDao = database.coursDao();
+        AppDatabase db =
+                AppDatabase.getInstance(application);
 
-        allCours = coursDao.getAllCours();
+        coursDao=db.coursDao();
+
+        allCours=coursDao.getAllCours();
     }
 
-    public void insert(Cours cours) {
-        executorService.execute(() -> coursDao.insert(cours));
+    public void insert(Cours cours){
+        executor.execute(() -> coursDao.insert(cours));
     }
 
-    public void update(Cours cours) {
-        executorService.execute(() -> coursDao.update(cours));
+    public void update(Cours cours){
+        executor.execute(() -> coursDao.update(cours));
     }
 
-    public void delete(Cours cours) {
-        executorService.execute(() -> coursDao.delete(cours));
+    public void delete(Cours cours){
+        executor.execute(() -> coursDao.delete(cours));
     }
 
-    public LiveData<List<Cours>> getAllCours() {
+    public LiveData<List<Cours>> getAllCours(){
         return allCours;
     }
 
-    public LiveData<List<Cours>> getCoursByMatiere(int matiereId) {
-        return coursDao.getCoursByMatiere(matiereId);
+    public LiveData<List<Cours>> getCoursByMatiere(int id){
+        return coursDao.getCoursByMatiere(id);
+    }
+
+    public Integer getTotalHeuresByMatiere(int id){
+        return coursDao.getTotalHeuresByMatiere(id);
     }
 }

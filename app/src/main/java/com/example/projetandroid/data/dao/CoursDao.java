@@ -26,9 +26,12 @@ public interface CoursDao {
     @Query("SELECT * FROM cours ORDER BY id DESC")
     LiveData<List<Cours>> getAllCours();
 
-    @Query("SELECT * FROM cours WHERE matiereId = :matiereId")
+    @Query("SELECT * FROM cours WHERE matiereId=:matiereId")
     LiveData<List<Cours>> getCoursByMatiere(int matiereId);
 
-    @Query("SELECT SUM(duree) FROM cours WHERE matiereId = :matiereId")
+    @Query("SELECT SUM(duree) FROM cours WHERE matiereId=:matiereId")
     Integer getTotalHeuresByMatiere(int matiereId);
+
+    @Query("SELECT * FROM cours WHERE id=:id")
+    Cours getCoursById(int id);
 }

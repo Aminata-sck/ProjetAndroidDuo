@@ -1,8 +1,11 @@
 package com.example.projetandroid.ui.cours;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,53 +39,106 @@ public class AddCoursActivity extends AppCompatActivity {
         editContenu = findViewById(R.id.editContenu);
         btnAjouter = findViewById(R.id.btnAjouter);
 
-        coursViewModel = new ViewModelProvider(this).get(CoursViewModel.class);
+        coursViewModel =
+                new ViewModelProvider(this)
+                        .get(CoursViewModel.class);
 
-        // Charger matières
         chargerMatieres();
 
-        btnAjouter.setOnClickListener(v -> ajouterCours());
+        btnAjouter.setOnClickListener(
+                v -> ajouterCours()
+        );
     }
 
     private void ajouterCours() {
 
-        String date = editDate.getText().toString();
-        String heure = editHeure.getText().toString();
-        String contenu = editContenu.getText().toString();
+        String date =
+                editDate.getText().toString().trim();
 
-        // VALIDATION CHAMPS
-        if (date.isEmpty() || heure.isEmpty() || contenu.isEmpty()) {
-            Toast.makeText(this, "Remplis tous les champs", Toast.LENGTH_SHORT).show();
+        String heure =
+                editHeure.getText().toString().trim();
+
+        String contenu =
+                editContenu.getText().toString().trim();
+
+        // Vérification champs vides
+
+        if (date.isEmpty()
+                || heure.isEmpty()
+                || contenu.isEmpty()) {
+
+            Toast.makeText(
+                    this,
+                    "Remplis tous les champs",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             return;
         }
 
         int duree;
 
         try {
-            duree = Integer.parseInt(editDuree.getText().toString());
+
+            duree =
+                    Integer.parseInt(
+                            editDuree.getText()
+                                    .toString()
+                    );
+
         } catch (Exception e) {
-            Toast.makeText(this, "Durée invalide", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(
+                    this,
+                    "Durée invalide",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             return;
         }
 
         if (duree <= 0) {
-            Toast.makeText(this, "Durée invalide", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(
+                    this,
+                    "La durée doit être > 0",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             return;
         }
 
-        // Récupérer matière sélectionnée
-        int position = spinnerMatiere.getSelectedItemPosition();
-        int matiereId = matiereIds.get(position);
+        // matière choisie
 
-        // ✅ VÉRIFICATION DÉPASSEMENT HORAIRE
+        int position =
+                spinnerMatiere
+                        .getSelectedItemPosition();
+
+        int matiereId =
+                matiereIds.get(position);
+
+        // Exemple temporaire volume total
 
         int volumeTotal = 36;
 
-        int heuresEffectuees = 0;
+        Integer heuresEffectuees =
+                coursViewModel
+                        .getTotalHeuresByMatiere(
+                                matiereId
+                        );
 
-        int heuresRestantes = volumeTotal - heuresEffectuees;
+        if (heuresEffectuees == null) {
 
-        if (heuresEffectuees + duree > volumeTotal) {
+            heuresEffectuees = 0;
+        }
+
+        int heuresRestantes =
+                volumeTotal - heuresEffectuees;
+
+        // Vérification dépassement
+
+        if ((heuresEffectuees + duree)
+                > volumeTotal) {
 
             Toast.makeText(
                     this,
@@ -93,33 +149,47 @@ public class AddCoursActivity extends AppCompatActivity {
             return;
         }
 
-        // CRÉATION DU COURS
-        Cours cours = new Cours(
-                matiereId,
-                date,
-                heure,
-                duree,
-                contenu
-        );
+        // Création du cours
 
-        // INSERTION ROOM
+        Cours cours =
+                new Cours(
+                        matiereId,
+                        date,
+                        heure,
+                        duree,
+                        contenu
+                );
+
         coursViewModel.insert(cours);
 
-        Toast.makeText(this,
-                "Cours ajouté avec succès",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(
+                this,
+                "Cours ajouté\nHeures restantes : "
+                        + (heuresRestantes - duree)
+                        + "h",
+                Toast.LENGTH_LONG
+        ).show();
 
-        // Vider champs
+        viderChamps();
+    }
+
+    private void viderChamps() {
+
         editDate.setText("");
+
         editHeure.setText("");
+
         editDuree.setText("");
+
         editContenu.setText("");
     }
 
-    // VERSION SIMPLE TEMPORAIRE
     private void chargerMatieres() {
 
-        List<String> matieres = new ArrayList<>();
+        List<String> matieres =
+                new ArrayList<>();
+
+        // temporaire jusqu'au merge Git
 
         matieres.add("Java");
         matieres.add("Maths");
@@ -127,11 +197,12 @@ public class AddCoursActivity extends AppCompatActivity {
         matiereIds.add(1);
         matiereIds.add(2);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                matieres
-        );
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        matieres
+                );
 
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item
