@@ -1,6 +1,5 @@
 package com.example.projetandroid.data.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,23 +14,17 @@ import java.util.List;
 public interface CoursDao {
 
     @Insert
-    void insert(Cours cours);
+    void insert(Cours c);
 
     @Update
-    void update(Cours cours);
+    void update(Cours c);
 
     @Delete
-    void delete(Cours cours);
+    void delete(Cours c);
 
-    @Query("SELECT * FROM cours ORDER BY id DESC")
-    LiveData<List<Cours>> getAllCours();
+    @Query("SELECT * FROM cours")
+    List<Cours> getAll();
 
-    @Query("SELECT * FROM cours WHERE matiereId=:matiereId")
-    LiveData<List<Cours>> getCoursByMatiere(int matiereId);
-
-    @Query("SELECT SUM(duree) FROM cours WHERE matiereId=:matiereId")
-    Integer getTotalHeuresByMatiere(int matiereId);
-
-    @Query("SELECT * FROM cours WHERE id=:id")
-    Cours getCoursById(int id);
+    @Query("SELECT * FROM cours WHERE matiereId = :id")
+    List<Cours> getByMatiere(int id);
 }

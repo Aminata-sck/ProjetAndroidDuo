@@ -1,57 +1,27 @@
 package com.example.projetandroid.repository;
 
-import android.app.Application;
+import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
-import com.example.projetandroid.data.dao.CoursDao;
 import com.example.projetandroid.data.database.AppDatabase;
 import com.example.projetandroid.data.entity.Cours;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class CoursRepository {
 
-    private final CoursDao coursDao;
+    private AppDatabase db;
 
-    private final LiveData<List<Cours>> allCours;
-
-    private final ExecutorService executor =
-            Executors.newSingleThreadExecutor();
-
-    public CoursRepository(Application application){
-
-        AppDatabase db =
-                AppDatabase.getInstance(application);
-
-        coursDao=db.coursDao();
-
-        allCours=coursDao.getAllCours();
+    public CoursRepository(Context context) {
+        db = AppDatabase.getInstance(context);
     }
 
-    public void insert(Cours cours){
-        executor.execute(() -> coursDao.insert(cours));
-    }
+    public void insert(Cours c) { db.coursDao().insert(c); }
+    public void update(Cours c) { db.coursDao().update(c); }
+    public void delete(Cours c) { db.coursDao().delete(c); }
 
-    public void update(Cours cours){
-        executor.execute(() -> coursDao.update(cours));
-    }
+    public List<Cours> getAll() { return db.coursDao().getAll(); }
 
-    public void delete(Cours cours){
-        executor.execute(() -> coursDao.delete(cours));
-    }
-
-    public LiveData<List<Cours>> getAllCours(){
-        return allCours;
-    }
-
-    public LiveData<List<Cours>> getCoursByMatiere(int id){
-        return coursDao.getCoursByMatiere(id);
-    }
-
-    public Integer getTotalHeuresByMatiere(int id){
-        return coursDao.getTotalHeuresByMatiere(id);
+    public List<Cours> getByMatiere(int id) {
+        return db.coursDao().getByMatiere(id);
     }
 }

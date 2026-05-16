@@ -12,51 +12,25 @@ public class Matiere {
     private String nom;
     private String ue;
     private String professeur;
-    private int volumeHoraire;
+    private double volumeHoraire;
 
-    // ✔ constructeur vide OBLIGATOIRE pour Room
-    public Matiere() {
-    }
-
-    // ✔ GETTERS + SETTERS (OBLIGATOIRES)
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
+    public Matiere(String nom, String ue, String professeur, double volumeHoraire) {
         this.nom = nom;
-    }
-
-    public String getUe() {
-        return ue;
-    }
-
-    public void setUe(String ue) {
         this.ue = ue;
-    }
-
-    public String getProfesseur() {
-        return professeur;
-    }
-
-    public void setProfesseur(String professeur) {
         this.professeur = professeur;
-    }
-
-    public int getVolumeHoraire() {
-        return volumeHoraire;
-    }
-
-    public void setVolumeHoraire(int volumeHoraire) {
         this.volumeHoraire = volumeHoraire;
     }
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getNom() { return nom; }
+    public String getUe() { return ue; }
+    public String getProfesseur() { return professeur; }
+    public double getVolumeHoraire() { return volumeHoraire; }
+
+    public void setNom(String nom) { this.nom = nom; }
+    public void setUe(String ue) { this.ue = ue; }
+    public void setProfesseur(String professeur) { this.professeur = professeur; }
+    public void setVolumeHoraire(double volumeHoraire) { this.volumeHoraire = volumeHoraire; }
 }
