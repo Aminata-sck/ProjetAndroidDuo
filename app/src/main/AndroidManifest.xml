@@ -16,6 +16,10 @@
         <!-- ACTIVITÉS COURS -->
 
         <activity
+            android:name=".ui.cours.CoursActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.cours.AddCoursActivity"
             android:exported="false" />
 
