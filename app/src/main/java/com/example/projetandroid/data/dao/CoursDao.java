@@ -23,15 +23,12 @@ public interface CoursDao {
     @Delete
     void delete(Cours cours);
 
-    // Tous les cours (LiveData pour observer dans UI)
-    @Query("SELECT * FROM cours ORDER BY id DESC")
+    @Query("SELECT * FROM cours")
     LiveData<List<Cours>> getAllCours();
 
-    // Cours par matière
-    @Query("SELECT * FROM cours WHERE matiereId = :matiereId")
-    LiveData<List<Cours>> getCoursByMatiere(int matiereId);
+    @Query("SELECT * FROM cours WHERE matiereId = :id")
+    LiveData<List<Cours>> getCoursByMatiere(int id);
 
-    // Somme des heures
-    @Query("SELECT SUM(duree) FROM cours WHERE matiereId = :matiereId")
-    Integer getTotalHeuresByMatiere(int matiereId);
+    @Query("SELECT SUM(duree) FROM cours WHERE matiereId = :id")
+    Integer getTotalHeuresByMatiere(int id);
 }

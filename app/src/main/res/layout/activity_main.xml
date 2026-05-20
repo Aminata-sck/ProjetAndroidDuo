@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="16dp">
 
-    <Button
-        android:id="@+id/btnMatieres"
-        android:layout_width="250dp"
+    <EditText
+        android:id="@+id/etNom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Matières"/>
+        android:hint="Nom matière" />
+
+    <EditText
+        android:id="@+id/etUe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="UE" />
+
+    <EditText
+        android:id="@+id/etProf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Professeur" />
+
+    <EditText
+        android:id="@+id/etVolume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Volume horaire"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/btnCours"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cours"
-        android:layout_marginTop="20dp"/>
+        android:text="Cours" />
+    <Button
+        android:id="@+id/btnAjouter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajouter matière" />
+
+    <ListView
+        android:id="@+id/listMatieres"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
